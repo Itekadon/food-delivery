@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Menuscreen from './components/Menuscreen';
+import Cartscreen from './components/Cartscreen';
+import Profilescreen from './components/Profilescreen';
+
+import { CartProvider } from './contexts/CartContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { FormProvider } from './contexts/FormContext';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <CartProvider>
+      <ThemeProvider>
+        <FormProvider>
+          <NavigationContainer>
+            <Tab.Navigator initialRouteName="Menu">
+              <Tab.Screen name="Menu" component={Menuscreen} />
+              <Tab.Screen name="Cart" component={Cartscreen} />
+              <Tab.Screen name="Profile" component={Profilescreen} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </FormProvider>
+      </ThemeProvider>
+    </CartProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
